@@ -10,6 +10,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 	</head>
 	<body class="is-preload">
 
@@ -31,6 +32,7 @@
 								<li><a href="#top" id="top-link"><span class="icon solid fa-home"> about work </span></a></li>
 								<li><a href="#portfolio" id="portfolio-link"><span class="icon solid fa-th">CV</span></a></li>
 								<li><a href="#about" id="about-link"><span class="icon solid fa-user">About Me</span></a></li>
+								<li><a href="#wuling-map" id="map-link"><span class="icon solid fa-map">Wuling Map</span></a></li>
 								<li><a href="#contact" id="contact-link"><span class="icon solid fa-envelope">Contact</span></a></li>
 							</ul>
 						</nav>
@@ -154,6 +156,21 @@
 						</div>
 					</section>
 
+				<!-- Wuling District Map -->
+					<section id="wuling-map" class="five">
+						<div class="container">
+
+							<header>
+								<h2>武陵区地图</h2>
+							</header>
+
+							<p>Explore the geographical information of Wuling District</p>
+							
+							<div id="map-container"></div>
+
+						</div>
+					</section>
+
 				<!-- Contact -->
 					<section id="contact" class="four">
 						<div class="container">
@@ -196,6 +213,7 @@
 			</div>
 
 		<!-- Scripts -->
+			<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.scrolly.min.js"></script>
 			<script src="assets/js/jquery.scrollex.min.js"></script>
@@ -203,6 +221,30 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			
+			<!-- Wuling District Map Initialization -->
+			<script>
+				// Initialize map centered on Wuling District, Changde, Hunan
+				var map = L.map('map-container').setView([29.0319, 111.6983], 13);
+				
+				// Add OpenStreetMap base layer
+				L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+					attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+					maxZoom: 19
+				}).addTo(map);
+				
+				// Add a marker for Wuling District
+				var marker = L.marker([29.0319, 111.6983]).addTo(map);
+				marker.bindPopup('<b>武陵区</b><br>Wuling District<br>Changde, Hunan').openPopup();
+				
+				// Optional: Add circle to highlight the area
+				var circle = L.circle([29.0319, 111.6983], {
+					color: 'red',
+					fillColor: '#f03',
+					fillOpacity: 0.2,
+					radius: 2000
+				}).addTo(map);
+			</script>
 
 	</body>
 </html>
