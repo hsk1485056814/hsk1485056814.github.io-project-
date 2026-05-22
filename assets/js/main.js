@@ -82,104 +82,44 @@
 		var $nav_a = $nav.find('a');
 
 		$nav_a
-			.addClass('scrolly')
 			.on('click', function(e) {
-
 				var $this = $(this);
+				var href = $this.attr('href');
+
+				// Only handle links to other pages (not # anchors)
+				if (href && href.charAt(0) !== '#' && !href.includes('.html#')) {
+					// Let the browser handle normal page navigation
+					return;
+				}
 
 				// External link? Bail.
-					if ($this.attr('href').charAt(0) != '#')
-						return;
+				if (href.charAt(0) != '#')
+					return;
 
-				// Prevent default.
-					e.preventDefault();
+				// Prevent default for anchor links on same page
+				e.preventDefault();
 
 				// Deactivate all links.
-					$nav_a.removeClass('active');
+				$nav_a.removeClass('active');
 
-				// Activate link *and* lock it (so Scrollex doesn't try to activate other links as we're scrolling to this one's section).
-					$this
-						.addClass('active')
-						.addClass('active-locked');
+				// Activate link
+				$this.addClass('active');
 
-				// Smooth scroll to section
-					var target = $this.attr('href');
-					var $target = $(target);
-					
-					if ($target.length) {
-						$('html, body').animate({
-							scrollTop: $target.offset().top
-						}, 800, 'swing', function() {
-							// Remove locked class after animation completes
-							$this.removeClass('active-locked');
-						});
-					}
-
-			})
-			.each(function() {
-
-				var	$this = $(this),
-					id = $this.attr('href'),
-					$section = $(id);
-
-				// No section for this link? Bail.
-					if ($section.length < 1)
-						return;
-
-				// Scrollex.
-					$section.scrollex({
-						mode: 'middle',
-						top: '-10vh',
-						bottom: '-10vh',
-						initialize: function() {
-
-							// Deactivate section.
-								$section.addClass('inactive');
-
-						},
-						enter: function() {
-
-							// Activate section.
-								$section.removeClass('inactive');
-
-							// No locked links? Deactivate all links and activate this section's one.
-								if ($nav_a.filter('.active-locked').length == 0) {
-
-									$nav_a.removeClass('active');
-									$this.addClass('active');
-
-								}
-
-							// Otherwise, if this section's link is the one that's locked, unlock it.
-								else if ($this.hasClass('active-locked'))
-									$this.removeClass('active-locked');
-
-						}
-					});
-
+				// Smooth scroll to section (for same-page anchors)
+				var target = href;
+				var $target = $(target);
+				
+				if ($target.length) {
+					$('html, body').animate({
+						scrollTop: $target.offset().top
+					}, 800, 'swing');
+				}
 			});
 
 	// Scrolly.
 		$('.scrolly').scrolly({
 			speed: 800,
 			offset: 0
-		});
-
-	// Handle all internal links for smooth scrolling
-		$('a[href^="#"]').on('click', function(e) {
-			var target = $(this).attr('href');
-			
-			// Only handle links that start with # and are not just #
-			if (target.length > 1) {
-				var $target = $(target);
-				
-				if ($target.length) {
-					e.preventDefault();
-					$('html, body').animate({
-						scrollTop: $target.offset().top
-					}, 800, 'swing');
-				}
-			}
 		});
 
 	// Header (narrower + mobile).
