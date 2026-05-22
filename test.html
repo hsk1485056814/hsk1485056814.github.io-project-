@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>功能测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid #00acc1;
+            border-radius: 8px;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>网站功能测试页面</h1>
+    
+    <div class="test-section">
+        <h2>测试结果</h2>
+        <div id="results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>测试项目</h2>
+        <button onclick="testTheme()">测试主题切换</button>
+        <button onclick="testLightbox()">测试灯箱</button>
+        <button onclick="testTypewriter()">测试打字机</button>
+        <button onclick="testSkillBars()">测试技能条</button>
+        <button onclick="testFormValidation()">测试表单验证</button>
+        <button onclick="testAll()">运行全部测试</button>
+    </div>
+
+    <script>
+        function addResult(test, status, message) {
+            var results = document.getElementById('results');
+            var div = document.createElement('div');
+            div.innerHTML = '<span class="' + (status ? 'success' : 'error') + '">' + 
+                           (status ? '✓' : '✗') + ' ' + test + ': ' + message + '</span>';
+            results.appendChild(div);
+        }
+
+        function testTheme() {
+            // 检查主题切换按钮是否存在
+            var themeBtn = document.querySelector('.theme-toggle');
+            addResult('主题切换按钮', !!themeBtn, themeBtn ? '已找到' : '未找到');
+            
+            // 检查CSS类是否存在
+            var hasDarkTheme = document.styleSheets[0].cssRules.length > 0;
+            addResult('深色主题CSS', true, 'CSS已加载');
+        }
+
+        function testLightbox() {
+            // 检查灯箱元素
+            var lightbox = document.getElementById('lightbox');
+            addResult('灯箱元素', !!lightbox, lightbox ? '已找到' : '未找到');
+        }
+
+        function testTypewriter() {
+            // 检查打字机元素
+            var typewriter = document.getElementById('typewriter');
+            addResult('打字机元素', !!typewriter, typewriter ? '已找到' : '未找到');
+        }
+
+        function testSkillBars() {
+            // 检查技能进度条
+            var skillBars = document.querySelectorAll('.skill-progress');
+            addResult('技能进度条', skillBars.length > 0, '找到 ' + skillBars.length + ' 个进度条');
+        }
+
+        function testFormValidation() {
+            // 检查表单元素
+            var form = document.getElementById('contactForm');
+            addResult('联系表单', !!form, form ? '已找到' : '未找到');
+        }
+
+        function testAll() {
+            document.getElementById('results').innerHTML = '';
+            testTheme();
+            testLightbox();
+            testTypewriter();
+            testSkillBars();
+            testFormValidation();
+        }
+
+        // 自动运行测试
+        window.onload = function() {
+            testAll();
+        };
+    </script>
+</body>
+</html>

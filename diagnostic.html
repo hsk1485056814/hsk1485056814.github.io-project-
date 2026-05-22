@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>网站诊断工具</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+        .card { background: white; padding: 20px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .pass { color: #4caf50; font-weight: bold; }
+        .fail { color: #f44336; font-weight: bold; }
+        .warn { color: #ff9800; font-weight: bold; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; background: #00acc1; color: white; border: none; border-radius: 4px; }
+        button:hover { background: #00838f; }
+        pre { background: #f5f5f5; padding: 10px; border-radius: 4px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🔍 网站功能诊断工具</h1>
+    
+    <div class="card">
+        <h2>快速诊断</h2>
+        <button onclick="runDiagnostics()">运行完整诊断</button>
+        <button onclick="clearResults()">清除结果</button>
+    </div>
+
+    <div id="diagnostic-results"></div>
+
+    <script>
+        function clearResults() {
+            document.getElementById('diagnostic-results').innerHTML = '';
+        }
+
+        function addResult(title, status, message, details) {
+            var results = document.getElementById('diagnostic-results');
+            var card = document.createElement('div');
+            card.className = 'card';
+            
+            var statusClass = status === 'pass' ? 'pass' : (status === 'fail' ? 'fail' : 'warn');
+            var statusIcon = status === 'pass' ? '✓' : (status === 'fail' ? '✗' : '⚠');
+            
+            card.innerHTML = `
+                <h3>${statusIcon} ${title}</h3>
+                <p class="${statusClass}">${message}</p>
+                ${details ? '<pre>' + details + '</pre>' : ''}
+            `;
+            
+            results.appendChild(card);
+        }
+
+        function runDiagnostics() {
+            clearResults();
+            
+            // 检查当前页面
+            var currentPage = window.location.pathname.split('/').pop();
+            addResult('当前页面', 'pass', currentPage || 'index.html', 'URL: ' + window.location.href);
+            
+            // 检查jQuery
+            if (typeof jQuery !== 'undefined') {
+                addResult('jQuery', 'pass', '已加载 (版本: ' + $.fn.jquery + ')');
+            } else {
+                addResult('jQuery', 'fail', '未加载', '请检查main.js是否正确引用');
+            }
+            
+            // 检查主题切换功能
+            if (typeof toggleTheme === 'function') {
+                addResult('主题切换函数', 'pass', 'toggleTheme函数已定义');
+            } else {
+                addResult('主题切换函数', 'fail', 'toggleTheme函数未定义');
+            }
+            
+            // 检查主题按钮
+            var themeBtn = document.querySelector('.theme-toggle');
+            if (themeBtn) {
+                addResult('主题切换按钮', 'pass', '按钮元素已找到');
+            } else {
+                addResult('主题切换按钮', 'fail', '按钮元素未找到', '检查HTML中是否有.theme-toggle元素');
+            }
+            
+            // 检查灯箱功能
+            if (typeof openLightbox === 'function') {
+                addResult('灯箱函数', 'pass', 'openLightbox函数已定义');
+            } else {
+                addResult('灯箱函数', 'fail', 'openLightbox函数未定义');
+            }
+            
+            var lightbox = document.getElementById('lightbox');
+            if (lightbox) {
+                addResult('灯箱元素', 'pass', '灯箱元素已找到');
+            } else {
+                addResult('灯箱元素', 'warn', '灯箱元素未找到', '只在portfolio.html中存在');
+            }
+            
+            // 检查打字机效果
+            var typewriter = document.getElementById('typewriter');
+            if (typewriter) {
+                addResult('打字机元素', 'pass', '打字机元素已找到');
+                if (typewriter.textContent.length > 0) {
+                    addResult('打字机动画', 'pass', '文本已显示: "' + typewriter.textContent + '"');
+                } else {
+                    addResult('打字机动画', 'warn', '文本为空', '动画可能还未开始或已完成');
+                }
+            } else {
+                addResult('打字机元素', 'warn', '打字机元素未找到', '只在index.html中存在');
+            }
+            
+            // 检查技能进度条
+            var skillBars = document.querySelectorAll('.skill-progress');
+            if (skillBars.length > 0) {
+                addResult('技能进度条', 'pass', '找到 ' + skillBars.length + ' 个进度条');
+                skillBars.forEach(function(bar, index) {
+                    var percent = bar.getAttribute('data-percent');
+                    var width = bar.style.width;
+                    addResult('进度条 ' + (index+1), width && width !== '0%' ? 'pass' : 'warn', 
+                             '目标: ' + percent + ', 当前: ' + (width || '0%'));
+                });
+            } else {
+                addResult('技能进度条', 'warn', '未找到进度条', '只在about.html中存在');
+            }
+            
+            // 检查表单验证
+            var contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                addResult('联系表单', 'pass', '表单元素已找到');
+                
+                var nameInput = document.getElementById('name');
+                var emailInput = document.getElementById('email');
+                var messageInput = document.getElementById('message');
+                
+                if (nameInput && emailInput && messageInput) {
+                    addResult('表单字段', 'pass', '所有字段已找到');
+                } else {
+                    addResult('表单字段', 'fail', '缺少字段', 
+                             'name: ' + !!nameInput + ', email: ' + !!emailInput + ', message: ' + !!messageInput);
+                }
+            } else {
+                addResult('联系表单', 'warn', '表单未找到', '只在contact.html中存在');
+            }
+            
+            // 检查CSS
+            var sheets = document.styleSheets;
+            if (sheets.length > 0) {
+                addResult('CSS样式表', 'pass', '找到 ' + sheets.length + ' 个样式表');
+                
+                // 检查关键CSS类
+                try {
+                    var cssText = sheets[0].cssRules ? sheets[0].cssRules.length : '无法访问';
+                    addResult('CSS规则', 'pass', '样式表包含 ' + cssText + ' 条规则');
+                } catch(e) {
+                    addResult('CSS规则', 'warn', '无法读取CSS规则（可能是跨域限制）');
+                }
+            } else {
+                addResult('CSS样式表', 'fail', '未找到样式表');
+            }
+            
+            // 检查LocalStorage
+            try {
+                localStorage.setItem('test', 'test');
+                localStorage.removeItem('test');
+                addResult('LocalStorage', 'pass', '可用');
+                
+                var savedTheme = localStorage.getItem('theme');
+                if (savedTheme) {
+                    addResult('保存的主题', 'pass', '当前主题: ' + savedTheme);
+                } else {
+                    addResult('保存的主题', 'warn', '未设置主题偏好');
+                }
+            } catch(e) {
+                addResult('LocalStorage', 'fail', '不可用', e.message);
+            }
+            
+            // 浏览器信息
+            addResult('浏览器', 'pass', navigator.userAgent, 
+                     '平台: ' + navigator.platform + '\n语言: ' + navigator.language);
+            
+            // 总结
+            var summary = document.createElement('div');
+            summary.className = 'card';
+            summary.innerHTML = `
+                <h2>📊 诊断总结</h2>
+                <p><strong>当前页面:</strong> ${currentPage}</p>
+                <p><strong>jQuery:</strong> ${typeof jQuery !== 'undefined' ? '✓ 已加载' : '✗ 未加载'}</p>
+                <p><strong>主题功能:</strong> ${typeof toggleTheme === 'function' ? '✓ 可用' : '✗ 不可用'}</p>
+                <p><strong>建议操作:</strong></p>
+                <ul>
+                    <li>如果看到红色错误，请硬刷新页面（Ctrl+F5）</li>
+                    <li>确保通过HTTP服务器访问，而不是直接打开文件</li>
+                    <li>检查浏览器控制台（F12）查看详细错误</li>
+                    <li>清除浏览器缓存后重试</li>
+                </ul>
+            `;
+            document.getElementById('diagnostic-results').appendChild(summary);
+        }
+
+        // 页面加载时自动运行诊断
+        window.addEventListener('load', function() {
+            setTimeout(runDiagnostics, 500);
+        });
+    </script>
+</body>
+</html>
