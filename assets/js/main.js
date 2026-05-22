@@ -42,6 +42,42 @@
 		window.addEventListener('scroll', fadeInOnScroll);
 		window.addEventListener('load', fadeInOnScroll);
 
+	// Scroll Progress Bar
+		function updateScrollProgress() {
+			var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+			var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+			var scrollPercent = (scrollTop / scrollHeight) * 100;
+			var progressBar = document.getElementById('scrollProgress');
+			
+			if (progressBar) {
+				progressBar.style.width = scrollPercent + '%';
+			}
+		}
+
+		window.addEventListener('scroll', updateScrollProgress);
+		window.addEventListener('load', updateScrollProgress);
+
+	// Back to Top Button
+		function toggleBackToTop() {
+			var backToTopBtn = document.getElementById('backToTop');
+			if (backToTopBtn) {
+				if (window.pageYOffset > 300) {
+					backToTopBtn.classList.add('visible');
+				} else {
+					backToTopBtn.classList.remove('visible');
+				}
+			}
+		}
+
+		window.addEventListener('scroll', toggleBackToTop);
+
+	// Scroll to Top Function
+		window.scrollToTop = function() {
+			$('html, body').animate({
+				scrollTop: 0
+			}, 800, 'swing');
+		};
+
 	// Nav.
 		var $nav_a = $nav.find('a');
 
@@ -65,6 +101,19 @@
 					$this
 						.addClass('active')
 						.addClass('active-locked');
+
+				// Smooth scroll to section
+					var target = $this.attr('href');
+					var $target = $(target);
+					
+					if ($target.length) {
+						$('html, body').animate({
+							scrollTop: $target.offset().top
+						}, 800, 'swing', function() {
+							// Remove locked class after animation completes
+							$this.removeClass('active-locked');
+						});
+					}
 
 			})
 			.each(function() {
@@ -111,7 +160,27 @@
 			});
 
 	// Scrolly.
-		$('.scrolly').scrolly();
+		$('.scrolly').scrolly({
+			speed: 800,
+			offset: 0
+		});
+
+	// Handle all internal links for smooth scrolling
+		$('a[href^="#"]').on('click', function(e) {
+			var target = $(this).attr('href');
+			
+			// Only handle links that start with # and are not just #
+			if (target.length > 1) {
+				var $target = $(target);
+				
+				if ($target.length) {
+					e.preventDefault();
+					$('html, body').animate({
+						scrollTop: $target.offset().top
+					}, 800, 'swing');
+				}
+			}
+		});
 
 	// Header (narrower + mobile).
 

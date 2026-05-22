@@ -2262,10 +2262,11 @@ input, select, textarea {
 					}
 
 				#nav ul li a.active {
-					background: rgba(0, 172, 193, 0.2);
-					box-shadow: inset 0 0 0.25em 0 rgba(0, 172, 193, 0.3);
+					background: rgba(0, 172, 193, 0.25);
+					box-shadow: inset 0 0 0.25em 0 rgba(0, 172, 193, 0.4);
 					color: #fff;
 					border-left-color: #00acc1;
+					font-weight: 600;
 				}
 
 					#nav ul li a.active span:before {
@@ -2332,6 +2333,64 @@ input, select, textarea {
 	.fade-in.visible {
 		opacity: 1;
 		transform: translateY(0);
+	}
+
+/* Scroll Progress Bar */
+
+	.scroll-progress {
+		position: fixed;
+		top: 0;
+		left: 0;
+		height: 3px;
+		background: linear-gradient(90deg, #00acc1 0%, #00838f 100%);
+		z-index: 10000;
+		-moz-transition: width 0.1s ease;
+		-webkit-transition: width 0.1s ease;
+		-ms-transition: width 0.1s ease;
+		transition: width 0.1s ease;
+		box-shadow: 0 0 10px rgba(0, 172, 193, 0.5);
+	}
+
+/* Back to Top Button */
+
+	.back-to-top {
+		position: fixed;
+		bottom: 30px;
+		right: 30px;
+		width: 50px;
+		height: 50px;
+		background: linear-gradient(135deg, #00acc1 0%, #00838f 100%);
+		color: #fff;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		opacity: 0;
+		visibility: hidden;
+		-moz-transition: all 0.3s ease;
+		-webkit-transition: all 0.3s ease;
+		-ms-transition: all 0.3s ease;
+		transition: all 0.3s ease;
+		box-shadow: 0 4px 15px rgba(0, 172, 193, 0.4);
+		z-index: 9999;
+		border: none;
+		font-size: 1.5em;
+	}
+
+	.back-to-top.visible {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	.back-to-top:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 6px 20px rgba(0, 172, 193, 0.6);
+		background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%);
+	}
+
+	.back-to-top:active {
+		transform: translateY(-2px);
 	}
 
 /* Main */
@@ -2402,6 +2461,62 @@ input, select, textarea {
 						font-size: 1.2em;
 						opacity: 0.95;
 						margin-top: 0.8em;
+					}
+					
+					/* Scroll Indicator */
+					.scroll-indicator {
+						position: absolute;
+						bottom: 30px;
+						left: 50%;
+						transform: translateX(-50%);
+						z-index: 2;
+						cursor: pointer;
+						-moz-transition: all 0.3s ease;
+						-webkit-transition: all 0.3s ease;
+						-ms-transition: all 0.3s ease;
+						transition: all 0.3s ease;
+					}
+					
+						.scroll-indicator:hover {
+							transform: translateX(-50%) translateY(5px);
+						}
+					
+						.scroll-indicator .mouse {
+							width: 30px;
+							height: 50px;
+							border: 2px solid rgba(255, 255, 255, 0.6);
+							border-radius: 20px;
+							position: relative;
+						}
+					
+							.scroll-indicator .mouse::before {
+								content: '';
+								width: 4px;
+								height: 10px;
+								background: #fff;
+								border-radius: 2px;
+								position: absolute;
+								top: 10px;
+								left: 50%;
+								transform: translateX(-50%);
+								-moz-animation: scroll 1.5s infinite;
+								-webkit-animation: scroll 1.5s infinite;
+								animation: scroll 1.5s infinite;
+							}
+					
+					@-moz-keyframes scroll {
+						0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+						100% { opacity: 0; transform: translateX(-50%) translateY(15px); }
+					}
+					
+					@-webkit-keyframes scroll {
+						0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+						100% { opacity: 0; transform: translateX(-50%) translateY(15px); }
+					}
+					
+					@keyframes scroll {
+						0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+						100% { opacity: 0; transform: translateX(-50%) translateY(15px); }
 					}
 			
 				#main > section.cover::before {

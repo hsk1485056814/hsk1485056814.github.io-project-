@@ -13,6 +13,9 @@
 	</head>
 	<body class="is-preload">
 
+		<!-- Scroll Progress Bar -->
+		<div class="scroll-progress" id="scrollProgress"></div>
+
 		<!-- Header -->
 			<div id="header">
 
@@ -68,6 +71,11 @@
 							<footer>
 								<a href="#portfolio" class="button scrolly">View My Work</a>
 							</footer>
+							
+							<!-- Scroll Indicator -->
+							<div class="scroll-indicator" onclick="document.getElementById('portfolio').scrollIntoView({behavior: 'smooth'})">
+								<div class="mouse"></div>
+							</div>
 
 						</div>
 					</section>
@@ -194,6 +202,11 @@
 					</ul>
 
 			</div>
+
+		<!-- Back to Top Button -->
+			<button class="back-to-top" id="backToTop" onclick="scrollToTop()">
+				<i class="icon solid fa-arrow-up"></i>
+			</button>
 
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
