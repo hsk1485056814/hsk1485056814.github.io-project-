@@ -26,6 +26,22 @@
 			}, 100);
 		});
 
+	// Scroll Animation
+		function fadeInOnScroll() {
+			var elements = document.querySelectorAll('.fade-in');
+			elements.forEach(function(element) {
+				var elementTop = element.getBoundingClientRect().top;
+				var elementVisible = 150;
+				
+				if (elementTop < window.innerHeight - elementVisible) {
+					element.classList.add('visible');
+				}
+			});
+		}
+
+		window.addEventListener('scroll', fadeInOnScroll);
+		window.addEventListener('load', fadeInOnScroll);
+
 	// Nav.
 		var $nav_a = $nav.find('a');
 
