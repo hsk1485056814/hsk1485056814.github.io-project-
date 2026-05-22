@@ -133,6 +133,18 @@
 				<i class="icon solid fa-arrow-up"></i>
 			</button>
 
+		<!-- Theme Toggle Button -->
+			<button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+				<i class="icon solid fa-moon" id="themeIcon"></i>
+			</button>
+
+		<!-- Lightbox -->
+			<div id="lightbox" class="lightbox">
+				<span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+				<img class="lightbox-content" id="lightbox-img">
+				<div class="lightbox-caption" id="lightbox-caption"></div>
+			</div>
+
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.scrolly.min.js"></script>

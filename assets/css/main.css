@@ -2075,6 +2075,56 @@ input, select, textarea {
 				transform: translateY(-2px);
 				box-shadow: 0 4px 12px rgba(0, 172, 193, 0.3);
 			}
+	
+	/* Skill Progress Bars */
+	
+		.skill-progress-container {
+			margin: 2em 0;
+		}
+	
+		.skill-item {
+			margin-bottom: 1.5em;
+		}
+	
+			.skill-item label {
+				display: block;
+				margin-bottom: 0.5em;
+				font-weight: 600;
+				color: inherit;
+			}
+	
+			.skill-bar {
+				width: 100%;
+				height: 25px;
+				background: rgba(0, 0, 0, 0.1);
+				border-radius: 15px;
+				overflow: hidden;
+				position: relative;
+				box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+			}
+	
+				.skill-progress {
+					height: 100%;
+					background: linear-gradient(90deg, #00acc1 0%, #00838f 100%);
+					border-radius: 15px;
+					-moz-transition: width 1.5s ease;
+					-webkit-transition: width 1.5s ease;
+					-ms-transition: width 1.5s ease;
+					transition: width 1.5s ease;
+					position: relative;
+					box-shadow: 0 0 10px rgba(0, 172, 193, 0.5);
+				}
+	
+					.skill-progress::after {
+						content: attr(data-percent);
+						position: absolute;
+						right: 10px;
+						top: 50%;
+						transform: translateY(-50%);
+						color: #fff;
+						font-size: 0.85em;
+						font-weight: 600;
+					}
 
 /* Icons */
 
@@ -2391,6 +2441,221 @@ input, select, textarea {
 
 	.back-to-top:active {
 		transform: translateY(-2px);
+	}
+
+/* Theme Toggle Button */
+
+	.theme-toggle {
+		position: fixed;
+		bottom: 90px;
+		right: 30px;
+		width: 50px;
+		height: 50px;
+		background: linear-gradient(135deg, #ff6f00 0%, #ff8f00 100%);
+		color: #fff;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		-moz-transition: all 0.3s ease;
+		-webkit-transition: all 0.3s ease;
+		-ms-transition: all 0.3s ease;
+		transition: all 0.3s ease;
+		box-shadow: 0 4px 15px rgba(255, 111, 0, 0.4);
+		z-index: 9999;
+		border: none;
+		font-size: 1.5em;
+	}
+
+	.theme-toggle:hover {
+		transform: translateY(-5px) rotate(180deg);
+		box-shadow: 0 6px 20px rgba(255, 111, 0, 0.6);
+	}
+
+/* Dark Theme */
+
+	body.dark-theme {
+		background: #1a1a2e;
+		color: #e0e0e0;
+	}
+
+	body.dark-theme #header {
+		background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+	}
+
+	body.dark-theme #main > section.two {
+		background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+	}
+
+	body.dark-theme #main > section.three {
+		background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+	}
+
+	body.dark-theme #main > section.four {
+		background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+	}
+
+	body.dark-theme .item {
+		background: #16213e;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+	}
+
+	body.dark-theme .item header {
+		background: #16213e;
+		border-top-color: #0f3460;
+	}
+
+	body.dark-theme h2,
+	body.dark-theme h3 {
+		color: #00acc1;
+	}
+
+	body.dark-theme strong,
+	body.dark-theme b {
+		color: #00bcd4;
+	}
+
+	body.dark-theme form input[type="text"],
+	body.dark-theme form input[type="email"],
+	body.dark-theme form textarea {
+		background: #16213e;
+		border-color: #0f3460;
+		color: #e0e0e0;
+	}
+
+	body.dark-theme form input[type="text"]:focus,
+	body.dark-theme form input[type="email"]:focus,
+	body.dark-theme form textarea:focus {
+		background: #1a1a2e;
+		border-color: #00acc1;
+	}
+
+/* Form Validation */
+
+	form input.error,
+	form textarea.error {
+		border-color: #f44336 !important;
+		box-shadow: 0 0 10px rgba(244, 67, 54, 0.3) !important;
+	}
+
+	form input.success,
+	form textarea.success {
+		border-color: #4caf50 !important;
+		box-shadow: 0 0 10px rgba(76, 175, 80, 0.3) !important;
+	}
+
+	.error-message {
+		color: #f44336;
+		font-size: 0.85em;
+		margin-top: 0.3em;
+		display: none;
+	}
+
+	.error-message.show {
+		display: block;
+		-moz-animation: shake 0.5s;
+		-webkit-animation: shake 0.5s;
+		animation: shake 0.5s;
+	}
+
+	@-moz-keyframes shake {
+		0%, 100% { transform: translateX(0); }
+		25% { transform: translateX(-10px); }
+		75% { transform: translateX(10px); }
+	}
+
+	@-webkit-keyframes shake {
+		0%, 100% { transform: translateX(0); }
+		25% { transform: translateX(-10px); }
+		75% { transform: translateX(10px); }
+	}
+
+	@keyframes shake {
+		0%, 100% { transform: translateX(0); }
+		25% { transform: translateX(-10px); }
+		75% { transform: translateX(10px); }
+	}
+
+/* Lightbox */
+
+	.lightbox {
+		display: none;
+		position: fixed;
+		z-index: 10001;
+		padding-top: 50px;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		background-color: rgba(0, 0, 0, 0.9);
+		-moz-transition: opacity 0.3s ease;
+		-webkit-transition: opacity 0.3s ease;
+		-ms-transition: opacity 0.3s ease;
+		transition: opacity 0.3s ease;
+	}
+
+	.lightbox.active {
+		display: block;
+	}
+
+	.lightbox-content {
+		margin: auto;
+		display: block;
+		max-width: 90%;
+		max-height: 85vh;
+		-moz-animation: zoomIn 0.3s;
+		-webkit-animation: zoomIn 0.3s;
+		animation: zoomIn 0.3s;
+		border-radius: 8px;
+		box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+	}
+
+	@-moz-keyframes zoomIn {
+		from { transform: scale(0); }
+		to { transform: scale(1); }
+	}
+
+	@-webkit-keyframes zoomIn {
+		from { transform: scale(0); }
+		to { transform: scale(1); }
+	}
+
+	@keyframes zoomIn {
+		from { transform: scale(0); }
+		to { transform: scale(1); }
+	}
+
+	.lightbox-close {
+		position: absolute;
+		top: 20px;
+		right: 35px;
+		color: #f1f1f1;
+		font-size: 40px;
+		font-weight: bold;
+		transition: 0.3s;
+		cursor: pointer;
+		z-index: 10002;
+	}
+
+	.lightbox-close:hover,
+	.lightbox-close:focus {
+		color: #00acc1;
+		text-decoration: none;
+		cursor: pointer;
+	}
+
+	.lightbox-caption {
+		margin: auto;
+		display: block;
+		width: 80%;
+		max-width: 700px;
+		text-align: center;
+		color: #ccc;
+		padding: 10px 0;
+		height: 150px;
+		font-size: 1.2em;
 	}
 
 /* Main */

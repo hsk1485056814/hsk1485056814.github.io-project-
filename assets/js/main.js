@@ -78,6 +78,197 @@
 			}, 800, 'swing');
 		};
 
+	// Theme Toggle Function
+		function initTheme() {
+			var savedTheme = localStorage.getItem('theme');
+			if (savedTheme === 'dark') {
+				document.body.classList.add('dark-theme');
+				updateThemeIcon(true);
+			}
+		}
+
+		window.toggleTheme = function() {
+			var body = document.body;
+			var isDark = body.classList.toggle('dark-theme');
+			localStorage.setItem('theme', isDark ? 'dark' : 'light');
+			updateThemeIcon(isDark);
+		};
+
+		function updateThemeIcon(isDark) {
+			var icon = document.getElementById('themeIcon');
+			if (icon) {
+				icon.className = isDark ? 'icon solid fa-sun' : 'icon solid fa-moon';
+			}
+		}
+
+		// Initialize theme on page load
+		initTheme();
+
+	// Form Validation
+		function initFormValidation() {
+			var form = document.getElementById('contactForm');
+			if (!form) return;
+
+			var nameInput = document.getElementById('name');
+			var emailInput = document.getElementById('email');
+			var messageInput = document.getElementById('message');
+
+			// Real-time validation
+			if (nameInput) {
+				nameInput.addEventListener('blur', function() {
+					validateField(this, 'nameError', function(value) {
+						return value.trim().length > 0;
+					});
+				});
+			}
+
+			if (emailInput) {
+				emailInput.addEventListener('blur', function() {
+					validateField(this, 'emailError', function(value) {
+						var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+						return emailRegex.test(value);
+					});
+				});
+			}
+
+			if (messageInput) {
+				messageInput.addEventListener('blur', function() {
+					validateField(this, 'messageError', function(value) {
+						return value.trim().length >= 10;
+					});
+				});
+			}
+
+			// Form submission
+			form.addEventListener('submit', function(e) {
+				e.preventDefault();
+				
+				var isNameValid = validateField(nameInput, 'nameError', function(value) {
+					return value.trim().length > 0;
+				});
+				
+				var isEmailValid = validateField(emailInput, 'emailError', function(value) {
+					var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+					return emailRegex.test(value);
+				});
+				
+				var isMessageValid = validateField(messageInput, 'messageError', function(value) {
+					return value.trim().length >= 10;
+				});
+
+				if (isNameValid && isEmailValid && isMessageValid) {
+					// Show success message
+					alert('Thank you for your message! I will get back to you soon.');
+					form.reset();
+					[nameInput, emailInput, messageInput].forEach(function(input) {
+						input.classList.remove('success', 'error');
+					});
+				}
+			});
+		}
+
+		function validateField(input, errorId, validationFn) {
+			var errorElement = document.getElementById(errorId);
+			var isValid = validationFn(input.value);
+
+			if (isValid) {
+				input.classList.remove('error');
+				input.classList.add('success');
+				if (errorElement) {
+					errorElement.classList.remove('show');
+				}
+			} else {
+				input.classList.remove('success');
+				input.classList.add('error');
+				if (errorElement) {
+					errorElement.classList.add('show');
+				}
+			}
+
+			return isValid;
+		}
+
+		window.addEventListener('load', initFormValidation);
+
+	// Typewriter Effect
+		function typewriterEffect() {
+			var element = document.getElementById('typewriter');
+			if (!element) return;
+			
+			var text = 'Shengkun Huang';
+			var index = 0;
+			var speed = 150;
+			
+			function type() {
+				if (index < text.length) {
+					element.textContent += text.charAt(index);
+					index++;
+					setTimeout(type, speed);
+				}
+			}
+			
+			type();
+		}
+
+		// Start typewriter effect on page load
+		window.addEventListener('load', function() {
+			setTimeout(typewriterEffect, 500);
+		});
+
+	// Lightbox Function
+		window.openLightbox = function(imgSrc, caption) {
+			var lightbox = document.getElementById('lightbox');
+			var lightboxImg = document.getElementById('lightbox-img');
+			var lightboxCaption = document.getElementById('lightbox-caption');
+			
+			if (lightbox && lightboxImg) {
+				lightbox.classList.add('active');
+				lightboxImg.src = imgSrc;
+				if (lightboxCaption && caption) {
+					lightboxCaption.textContent = caption;
+				}
+				document.body.style.overflow = 'hidden';
+			}
+		};
+
+		window.closeLightbox = function() {
+			var lightbox = document.getElementById('lightbox');
+			if (lightbox) {
+				lightbox.classList.remove('active');
+				document.body.style.overflow = 'auto';
+			}
+		};
+
+		// Close lightbox when clicking outside the image
+		window.addEventListener('click', function(e) {
+			var lightbox = document.getElementById('lightbox');
+			if (e.target === lightbox) {
+				closeLightbox();
+			}
+		});
+
+		// Add click event to portfolio images
+		window.addEventListener('load', function() {
+			var portfolioImages = document.querySelectorAll('.item .image img');
+			portfolioImages.forEach(function(img) {
+				img.style.cursor = 'pointer';
+				img.addEventListener('click', function() {
+					var src = this.getAttribute('src');
+					var alt = this.getAttribute('alt');
+					openLightbox(src, alt);
+				});
+			});
+
+			// Animate skill progress bars
+			var skillBars = document.querySelectorAll('.skill-progress');
+			skillBars.forEach(function(bar) {
+				var percent = bar.getAttribute('data-percent');
+				setTimeout(function() {
+					bar.style.width = percent;
+				}, 300);
+			});
+		});
+
 	// Nav.
 		var $nav_a = $nav.find('a');
 
