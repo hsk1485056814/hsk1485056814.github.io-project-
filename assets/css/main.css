@@ -2577,105 +2577,221 @@ input, select, textarea {
 		75% { transform: translateX(10px); }
 	}
 
-/* Animated Spider */
+/* Animated Spider - Super Cute Version */
 
 	.spider-container {
 		position: fixed;
 		z-index: 9998;
-		pointer-events: none;
+		pointer-events: auto;
+		cursor: pointer;
 		transition: all 0.3s ease;
+		filter: drop-shadow(0 8px 16px rgba(108, 92, 231, 0.3));
+	}
+
+	.spider-container:hover {
+		transform: scale(1.15) rotate(5deg);
+		filter: drop-shadow(0 12px 24px rgba(108, 92, 231, 0.4));
 	}
 
 	.spider {
-		width: 40px;
-		height: 40px;
+		width: 70px;
+		height: 70px;
 		position: relative;
-		animation: spiderMove 20s infinite linear;
+		animation: spiderBounce 0.8s infinite alternate cubic-bezier(0.68, -0.55, 0.265, 1.55);
 	}
 
+	@keyframes spiderBounce {
+		from { transform: translateY(0) scale(1); }
+		to { transform: translateY(-8px) scale(1.05); }
+	}
+
+	/* Spider Body - Round and Adorable */
 	.spider-body {
-		width: 20px;
-		height: 20px;
-		background: radial-gradient(circle at 30% 30%, #4a4a4a, #2a2a2a);
+		width: 45px;
+		height: 45px;
+		background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 50%, #5f3dc4 100%);
 		border-radius: 50%;
 		position: absolute;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+		box-shadow: 
+			inset -5px -5px 10px rgba(0, 0, 0, 0.15),
+			inset 5px 5px 10px rgba(255, 255, 255, 0.2),
+			0 5px 15px rgba(108, 92, 231, 0.4);
+		border: 3px solid #fff;
 	}
 
+	/* Cute white spots on body */
+	.spider-body::before {
+		content: '';
+		position: absolute;
+		width: 8px;
+		height: 8px;
+		background: rgba(255, 255, 255, 0.6);
+		border-radius: 50%;
+		top: 30%;
+		left: 25%;
+		box-shadow: 
+			12px 5px 0 rgba(255, 255, 255, 0.4),
+			5px 15px 0 rgba(255, 255, 255, 0.5),
+			18px 12px 0 rgba(255, 255, 255, 0.3);
+	}
+
+	/* Spider Head - Small and Round */
 	.spider-head {
-		width: 14px;
-		height: 14px;
-		background: radial-gradient(circle at 30% 30%, #5a5a5a, #3a3a3a);
+		width: 28px;
+		height: 28px;
+		background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
 		border-radius: 50%;
 		position: absolute;
-		top: 20%;
+		top: 15%;
 		left: 50%;
 		transform: translateX(-50%);
+		box-shadow: 
+			inset -3px -3px 6px rgba(0, 0, 0, 0.1),
+			0 3px 8px rgba(108, 92, 231, 0.3);
+		border: 2px solid #fff;
+		z-index: 2;
 	}
 
+	/* Big Cute Eyes */
 	.spider-eye {
-		width: 4px;
-		height: 4px;
-		background: #ff0000;
+		width: 10px;
+		height: 10px;
+		background: #fff;
 		border-radius: 50%;
 		position: absolute;
-		top: 4px;
-		box-shadow: 0 0 4px #ff0000;
-		animation: eyeGlow 2s infinite;
+		top: 35%;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+		overflow: hidden;
 	}
 
 	.spider-eye.left {
-		left: 3px;
+		left: 25%;
 	}
 
 	.spider-eye.right {
-		right: 3px;
+		right: 25%;
 	}
 
-	@keyframes eyeGlow {
-		0%, 100% { opacity: 1; box-shadow: 0 0 4px #ff0000; }
-		50% { opacity: 0.6; box-shadow: 0 0 8px #ff0000; }
-	}
-
-	.spider-leg {
-		width: 2px;
-		height: 15px;
-		background: linear-gradient(to bottom, #3a3a3a, #2a2a2a);
+	/* Eye pupils - look around */
+	.spider-eye::after {
+		content: '';
+		width: 6px;
+		height: 6px;
+		background: #2d3436;
+		border-radius: 50%;
 		position: absolute;
-		transform-origin: top center;
-		border-radius: 1px;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		animation: eyeLook 3s infinite;
 	}
 
-	.spider-leg:nth-child(1) { top: 30%; left: 20%; transform: rotate(-60deg); animation: legMove1 0.5s infinite alternate; }
-	.spider-leg:nth-child(2) { top: 35%; left: 15%; transform: rotate(-40deg); animation: legMove2 0.5s infinite alternate; }
-	.spider-leg:nth-child(3) { top: 45%; left: 15%; transform: rotate(-20deg); animation: legMove1 0.5s infinite alternate; }
-	.spider-leg:nth-child(4) { top: 55%; left: 20%; transform: rotate(0deg); animation: legMove2 0.5s infinite alternate; }
-	.spider-leg:nth-child(5) { top: 30%; right: 20%; transform: rotate(60deg); animation: legMove2 0.5s infinite alternate; }
-	.spider-leg:nth-child(6) { top: 35%; right: 15%; transform: rotate(40deg); animation: legMove1 0.5s infinite alternate; }
-	.spider-leg:nth-child(7) { top: 45%; right: 15%; transform: rotate(20deg); animation: legMove2 0.5s infinite alternate; }
-	.spider-leg:nth-child(8) { top: 55%; right: 20%; transform: rotate(0deg); animation: legMove1 0.5s infinite alternate; }
+	@keyframes eyeLook {
+		0%, 100% { transform: translate(-50%, -50%); }
+		25% { transform: translate(-30%, -50%); }
+		50% { transform: translate(-50%, -40%); }
+		75% { transform: translate(-70%, -50%); }
+	}
+
+	/* Blush marks - super cute! */
+	.spider-head::before,
+	.spider-head::after {
+		content: '';
+		width: 6px;
+		height: 4px;
+		background: rgba(255, 182, 193, 0.6);
+		border-radius: 50%;
+		position: absolute;
+		bottom: 25%;
+	}
+
+	.spider-head::before {
+		left: 15%;
+	}
+
+	.spider-head::after {
+		right: 15%;
+	}
+
+	/* Smile */
+	.spider-smile {
+		width: 12px;
+		height: 6px;
+		border-bottom: 2px solid #2d3436;
+		border-radius: 0 0 50% 50%;
+		position: absolute;
+		bottom: 20%;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
+	/* Legs - Thicker and Cuter */
+	.spider-leg {
+		width: 3px;
+		height: 20px;
+		background: linear-gradient(to bottom, #6c5ce7, #5f3dc4);
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform-origin: top center;
+		border-radius: 2px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	}
+
+	/* Leg joints for cuteness */
+	.spider-leg::after {
+		content: '';
+		width: 6px;
+		height: 6px;
+		background: #a29bfe;
+		border-radius: 50%;
+		position: absolute;
+		bottom: -3px;
+		left: 50%;
+		transform: translateX(-50%);
+		border: 1px solid #fff;
+	}
+
+	/* Left side legs */
+	.spider-leg:nth-child(1) { transform: translate(-50%, -50%) rotate(-60deg); animation: legMove1 0.6s infinite alternate; }
+	.spider-leg:nth-child(2) { transform: translate(-50%, -50%) rotate(-30deg); animation: legMove2 0.6s infinite alternate; }
+	.spider-leg:nth-child(3) { transform: translate(-50%, -50%) rotate(0deg); animation: legMove1 0.6s infinite alternate; }
+	.spider-leg:nth-child(4) { transform: translate(-50%, -50%) rotate(30deg); animation: legMove2 0.6s infinite alternate; }
+
+	/* Right side legs */
+	.spider-leg:nth-child(5) { transform: translate(-50%, -50%) rotate(150deg); animation: legMove2 0.6s infinite alternate; }
+	.spider-leg:nth-child(6) { transform: translate(-50%, -50%) rotate(120deg); animation: legMove1 0.6s infinite alternate; }
+	.spider-leg:nth-child(7) { transform: translate(-50%, -50%) rotate(90deg); animation: legMove2 0.6s infinite alternate; }
+	.spider-leg:nth-child(8) { transform: translate(-50%, -50%) rotate(60deg); animation: legMove1 0.6s infinite alternate; }
 
 	@keyframes legMove1 {
-		from { transform: rotate(-60deg) scaleY(1); }
-		to { transform: rotate(-70deg) scaleY(0.9); }
+		from { transform: translate(-50%, -50%) rotate(var(--base-rotation, 0deg)) scaleY(1); }
+		to { transform: translate(-50%, -50%) rotate(calc(var(--base-rotation, 0deg) + 10deg)) scaleY(0.9); }
 	}
 
 	@keyframes legMove2 {
-		from { transform: rotate(-40deg) scaleY(1); }
-		to { transform: rotate(-30deg) scaleY(0.9); }
+		from { transform: translate(-50%, -50%) rotate(var(--base-rotation, 0deg)) scaleY(0.9); }
+		to { transform: translate(-50%, -50%) rotate(calc(var(--base-rotation, 0deg) - 10deg)) scaleY(1); }
 	}
 
+	/* Web thread - thin and elegant */
 	.spider-web {
+		width: 2px;
+		height: 50px;
+		background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.6));
 		position: absolute;
-		top: -100px;
+		top: -50px;
 		left: 50%;
-		width: 1px;
-		height: 100px;
-		background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.3));
 		transform: translateX(-50%);
+		animation: webSway 2s infinite ease-in-out;
+	}
+
+	@keyframes webSway {
+		0%, 100% { transform: translateX(-50%) rotate(-5deg); }
+		50% { transform: translateX(-50%) rotate(5deg); }
 	}
 
 	@keyframes spiderMove {
