@@ -2577,6 +2577,121 @@ input, select, textarea {
 		75% { transform: translateX(10px); }
 	}
 
+/* Animated Spider */
+
+	.spider-container {
+		position: fixed;
+		z-index: 9998;
+		pointer-events: none;
+		transition: all 0.3s ease;
+	}
+
+	.spider {
+		width: 40px;
+		height: 40px;
+		position: relative;
+		animation: spiderMove 20s infinite linear;
+	}
+
+	.spider-body {
+		width: 20px;
+		height: 20px;
+		background: radial-gradient(circle at 30% 30%, #4a4a4a, #2a2a2a);
+		border-radius: 50%;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+	}
+
+	.spider-head {
+		width: 14px;
+		height: 14px;
+		background: radial-gradient(circle at 30% 30%, #5a5a5a, #3a3a3a);
+		border-radius: 50%;
+		position: absolute;
+		top: 20%;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
+	.spider-eye {
+		width: 4px;
+		height: 4px;
+		background: #ff0000;
+		border-radius: 50%;
+		position: absolute;
+		top: 4px;
+		box-shadow: 0 0 4px #ff0000;
+		animation: eyeGlow 2s infinite;
+	}
+
+	.spider-eye.left {
+		left: 3px;
+	}
+
+	.spider-eye.right {
+		right: 3px;
+	}
+
+	@keyframes eyeGlow {
+		0%, 100% { opacity: 1; box-shadow: 0 0 4px #ff0000; }
+		50% { opacity: 0.6; box-shadow: 0 0 8px #ff0000; }
+	}
+
+	.spider-leg {
+		width: 2px;
+		height: 15px;
+		background: linear-gradient(to bottom, #3a3a3a, #2a2a2a);
+		position: absolute;
+		transform-origin: top center;
+		border-radius: 1px;
+	}
+
+	.spider-leg:nth-child(1) { top: 30%; left: 20%; transform: rotate(-60deg); animation: legMove1 0.5s infinite alternate; }
+	.spider-leg:nth-child(2) { top: 35%; left: 15%; transform: rotate(-40deg); animation: legMove2 0.5s infinite alternate; }
+	.spider-leg:nth-child(3) { top: 45%; left: 15%; transform: rotate(-20deg); animation: legMove1 0.5s infinite alternate; }
+	.spider-leg:nth-child(4) { top: 55%; left: 20%; transform: rotate(0deg); animation: legMove2 0.5s infinite alternate; }
+	.spider-leg:nth-child(5) { top: 30%; right: 20%; transform: rotate(60deg); animation: legMove2 0.5s infinite alternate; }
+	.spider-leg:nth-child(6) { top: 35%; right: 15%; transform: rotate(40deg); animation: legMove1 0.5s infinite alternate; }
+	.spider-leg:nth-child(7) { top: 45%; right: 15%; transform: rotate(20deg); animation: legMove2 0.5s infinite alternate; }
+	.spider-leg:nth-child(8) { top: 55%; right: 20%; transform: rotate(0deg); animation: legMove1 0.5s infinite alternate; }
+
+	@keyframes legMove1 {
+		from { transform: rotate(-60deg) scaleY(1); }
+		to { transform: rotate(-70deg) scaleY(0.9); }
+	}
+
+	@keyframes legMove2 {
+		from { transform: rotate(-40deg) scaleY(1); }
+		to { transform: rotate(-30deg) scaleY(0.9); }
+	}
+
+	.spider-web {
+		position: absolute;
+		top: -100px;
+		left: 50%;
+		width: 1px;
+		height: 100px;
+		background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.3));
+		transform: translateX(-50%);
+	}
+
+	@keyframes spiderMove {
+		0% { transform: translate(0, 0) rotate(0deg); }
+		10% { transform: translate(100px, 50px) rotate(45deg); }
+		20% { transform: translate(200px, 0) rotate(90deg); }
+		30% { transform: translate(300px, -50px) rotate(135deg); }
+		40% { transform: translate(400px, 0) rotate(180deg); }
+		50% { transform: translate(300px, 50px) rotate(225deg); }
+		60% { transform: translate(200px, 100px) rotate(270deg); }
+		70% { transform: translate(100px, 50px) rotate(315deg); }
+		80% { transform: translate(0, 0) rotate(360deg); }
+		90% { transform: translate(-100px, -50px) rotate(315deg); }
+		100% { transform: translate(0, 0) rotate(0deg); }
+	}
+
 /* Lightbox */
 
 	.lightbox {

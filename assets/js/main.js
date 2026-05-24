@@ -104,6 +104,87 @@
 		// Initialize theme on page load
 		initTheme();
 
+	// Animated Spider
+		function initSpider() {
+			var spiderContainer = document.getElementById('spiderContainer');
+			if (!spiderContainer) return;
+
+			var spider = document.getElementById('spider');
+			var posX = Math.random() * (window.innerWidth - 100);
+			var posY = Math.random() * (window.innerHeight - 100);
+			var targetX = posX;
+			var targetY = posY;
+			var speed = 2;
+			var moveInterval;
+
+			// Set initial position
+			spiderContainer.style.left = posX + 'px';
+			spiderContainer.style.top = posY + 'px';
+
+			// Function to generate new random target
+			function generateNewTarget() {
+				targetX = Math.random() * (window.innerWidth - 100);
+				targetY = Math.random() * (window.innerHeight - 100);
+			}
+
+			// Move spider towards target
+			function moveSpider() {
+				var currentX = parseFloat(spiderContainer.style.left) || posX;
+				var currentY = parseFloat(spiderContainer.style.top) || posY;
+
+				var dx = targetX - currentX;
+				var dy = targetY - currentY;
+				var distance = Math.sqrt(dx * dx + dy * dy);
+
+				if (distance < 5) {
+					// Reached target, generate new one
+					generateNewTarget();
+				} else {
+					// Move towards target
+					var moveX = (dx / distance) * speed;
+					var moveY = (dy / distance) * speed;
+
+					posX = currentX + moveX;
+					posY = currentY + moveY;
+
+					spiderContainer.style.left = posX + 'px';
+					spiderContainer.style.top = posY + 'px';
+
+					// Rotate spider to face movement direction
+					var angle = Math.atan2(dy, dx) * 180 / Math.PI;
+					spider.style.transform = 'rotate(' + (angle + 90) + 'deg)';
+				}
+			}
+
+			// Start moving
+			moveInterval = setInterval(moveSpider, 50);
+
+			// Change target every 3 seconds
+			setInterval(generateNewTarget, 3000);
+
+			// Pause when user hovers over spider
+			spiderContainer.addEventListener('mouseenter', function() {
+				clearInterval(moveInterval);
+				spider.style.animationPlayState = 'paused';
+			});
+
+			spiderContainer.addEventListener('mouseleave', function() {
+				moveInterval = setInterval(moveSpider, 50);
+				spider.style.animationPlayState = 'running';
+			});
+
+			// Click to make spider jump to random location
+			spiderContainer.addEventListener('click', function() {
+				posX = Math.random() * (window.innerWidth - 100);
+				posY = Math.random() * (window.innerHeight - 100);
+				spiderContainer.style.left = posX + 'px';
+				spiderContainer.style.top = posY + 'px';
+				generateNewTarget();
+			});
+		}
+
+		window.addEventListener('load', initSpider);
+
 	// Form Validation
 		function initFormValidation() {
 			var form = document.getElementById('contactForm');
