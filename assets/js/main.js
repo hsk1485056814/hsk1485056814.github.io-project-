@@ -104,6 +104,107 @@
 		// Initialize theme on page load
 		initTheme();
 
+	// Particles Background
+		function initParticles() {
+			var particlesContainer = document.getElementById('particles');
+			if (!particlesContainer) return;
+
+			var particleCount = 50;
+			
+			for (var i = 0; i < particleCount; i++) {
+				var particle = document.createElement('div');
+				particle.className = 'particle';
+				
+				var size = Math.random() * 5 + 2;
+				var posX = Math.random() * 100;
+				var delay = Math.random() * 15;
+				var duration = Math.random() * 10 + 10;
+				
+				particle.style.width = size + 'px';
+				particle.style.height = size + 'px';
+				particle.style.left = posX + '%';
+				particle.style.bottom = '-10px';
+				particle.style.animationDelay = delay + 's';
+				particle.style.animationDuration = duration + 's';
+				
+				particlesContainer.appendChild(particle);
+			}
+		}
+
+		initParticles();
+
+	// Statistics Counter Animation
+		function animateCounters() {
+			var counters = document.querySelectorAll('.stat-number');
+			
+			counters.forEach(function(counter) {
+				var target = parseInt(counter.getAttribute('data-target'));
+				var duration = 2000;
+				var increment = target / (duration / 16);
+				var current = 0;
+				
+				function updateCounter() {
+					current += increment;
+					if (current < target) {
+						counter.textContent = Math.floor(current);
+						requestAnimationFrame(updateCounter);
+					} else {
+						counter.textContent = target;
+					}
+				}
+				
+				updateCounter();
+			});
+		}
+
+		// Trigger counter animation when stats section is visible
+		var statsObserver = new IntersectionObserver(function(entries) {
+			entries.forEach(function(entry) {
+				if (entry.isIntersecting) {
+					animateCounters();
+					statsObserver.unobserve(entry.target);
+				}
+			});
+		}, { threshold: 0.5 });
+
+		var statsContainer = document.querySelector('.stats-container');
+		if (statsContainer) {
+			statsObserver.observe(statsContainer);
+		}
+
+	// Portfolio Filter
+		function initPortfolioFilter() {
+			var filterButtons = document.querySelectorAll('.filter-btn');
+			var portfolioItems = document.querySelectorAll('.portfolio-item');
+			
+			filterButtons.forEach(function(button) {
+				button.addEventListener('click', function() {
+					var filter = this.getAttribute('data-filter');
+					
+					// Update active button
+					filterButtons.forEach(function(btn) {
+						btn.classList.remove('active');
+					});
+					this.classList.add('active');
+					
+					// Filter items
+					portfolioItems.forEach(function(item) {
+						var category = item.getAttribute('data-category');
+						
+						if (filter === 'all' || category === filter) {
+							item.classList.remove('hidden');
+							item.classList.add('show');
+						} else {
+							item.classList.remove('show');
+							item.classList.add('hidden');
+						}
+					});
+				});
+			});
+		}
+
+		initPortfolioFilter();
+
 	// Animated Spider
 		function initSpider() {
 			var spiderContainer = document.getElementById('spiderContainer');

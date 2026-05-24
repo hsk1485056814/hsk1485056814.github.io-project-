@@ -2794,6 +2794,352 @@ input, select, textarea {
 		50% { transform: translateX(-50%) rotate(5deg); }
 	}
 
+/* Statistics Counter */
+
+	.stats-container {
+		display: flex;
+		justify-content: space-around;
+		flex-wrap: wrap;
+		margin: 3em 0;
+		gap: 2em;
+	}
+
+	.stat-item {
+		text-align: center;
+		padding: 2em;
+		background: rgba(255, 255, 255, 0.05);
+		border-radius: 12px;
+		flex: 1;
+		min-width: 150px;
+		transition: all 0.3s ease;
+		border: 2px solid rgba(0, 172, 193, 0.2);
+	}
+
+	.stat-item:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 8px 20px rgba(0, 172, 193, 0.3);
+		border-color: #00acc1;
+	}
+
+	.stat-number {
+		font-size: 3em;
+		font-weight: bold;
+		color: #00acc1;
+		display: block;
+		margin-bottom: 0.5em;
+	}
+
+	.stat-label {
+		font-size: 1em;
+		color: inherit;
+		opacity: 0.8;
+	}
+
+/* Timeline */
+
+	.timeline {
+		position: relative;
+		padding: 2em 0;
+		margin: 2em 0;
+	}
+
+	.timeline::before {
+		content: '';
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 3px;
+		height: 100%;
+		background: linear-gradient(to bottom, #00acc1, #00838f);
+	}
+
+	.timeline-item {
+		position: relative;
+		margin-bottom: 3em;
+		width: 50%;
+		padding: 0 2em;
+	}
+
+	.timeline-item:nth-child(odd) {
+		left: 0;
+		text-align: right;
+	}
+
+	.timeline-item:nth-child(even) {
+		left: 50%;
+	}
+
+	.timeline-content {
+		background: rgba(255, 255, 255, 0.05);
+		padding: 1.5em;
+		border-radius: 12px;
+		border: 2px solid rgba(0, 172, 193, 0.2);
+		transition: all 0.3s ease;
+	}
+
+	.timeline-content:hover {
+		border-color: #00acc1;
+		box-shadow: 0 8px 20px rgba(0, 172, 193, 0.2);
+		transform: scale(1.02);
+	}
+
+	.timeline-dot {
+		position: absolute;
+		width: 20px;
+		height: 20px;
+		background: #00acc1;
+		border-radius: 50%;
+		top: 20px;
+		border: 4px solid #fff;
+		box-shadow: 0 0 10px rgba(0, 172, 193, 0.5);
+	}
+
+	.timeline-item:nth-child(odd) .timeline-dot {
+		right: -10px;
+	}
+
+	.timeline-item:nth-child(even) .timeline-dot {
+		left: -10px;
+	}
+
+	.timeline-date {
+		font-weight: bold;
+		color: #00acc1;
+		margin-bottom: 0.5em;
+		font-size: 0.9em;
+	}
+
+	.timeline-title {
+		font-size: 1.3em;
+		font-weight: bold;
+		margin-bottom: 0.5em;
+	}
+
+	.timeline-description {
+		font-size: 0.95em;
+		opacity: 0.9;
+		line-height: 1.6;
+	}
+
+/* Filter Buttons */
+
+	.filter-buttons {
+		display: flex;
+		justify-content: center;
+		gap: 1em;
+		margin: 2em 0;
+		flex-wrap: wrap;
+	}
+
+	.filter-btn {
+		padding: 0.8em 1.5em;
+		background: rgba(0, 172, 193, 0.1);
+		border: 2px solid rgba(0, 172, 193, 0.3);
+		border-radius: 25px;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		color: inherit;
+		font-weight: 600;
+	}
+
+	.filter-btn:hover,
+	.filter-btn.active {
+		background: linear-gradient(135deg, #00acc1 0%, #00838f 100%);
+		color: #fff;
+		border-color: #00acc1;
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(0, 172, 193, 0.3);
+	}
+
+	.portfolio-item {
+		transition: all 0.4s ease;
+	}
+
+	.portfolio-item.hidden {
+		display: none;
+	}
+
+	.portfolio-item.show {
+		display: block;
+		animation: fadeInUp 0.5s ease;
+	}
+
+	@keyframes fadeInUp {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+/* Blog Cards */
+
+	.blog-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 2em;
+		margin: 2em 0;
+	}
+
+	.blog-card {
+		background: rgba(255, 255, 255, 0.05);
+		border-radius: 12px;
+		overflow: hidden;
+		border: 2px solid rgba(0, 172, 193, 0.2);
+		transition: all 0.3s ease;
+	}
+
+	.blog-card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 8px 20px rgba(0, 172, 193, 0.3);
+		border-color: #00acc1;
+	}
+
+	.blog-image {
+		width: 100%;
+		height: 200px;
+		object-fit: cover;
+	}
+
+	.blog-content {
+		padding: 1.5em;
+	}
+
+	.blog-date {
+		font-size: 0.85em;
+		color: #00acc1;
+		margin-bottom: 0.5em;
+	}
+
+	.blog-title {
+		font-size: 1.3em;
+		font-weight: bold;
+		margin-bottom: 0.8em;
+	}
+
+	.blog-excerpt {
+		font-size: 0.95em;
+		line-height: 1.6;
+		opacity: 0.9;
+		margin-bottom: 1em;
+	}
+
+	.blog-link {
+		color: #00acc1;
+		text-decoration: none;
+		font-weight: 600;
+		transition: all 0.3s ease;
+	}
+
+	.blog-link:hover {
+		color: #00838f;
+		text-decoration: underline;
+	}
+
+/* Certificate Cards */
+
+	.certificates-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+		gap: 2em;
+		margin: 2em 0;
+	}
+
+	.certificate-card {
+		background: rgba(255, 255, 255, 0.05);
+		border-radius: 12px;
+		padding: 2em;
+		text-align: center;
+		border: 2px solid rgba(0, 172, 193, 0.2);
+		transition: all 0.3s ease;
+	}
+
+	.certificate-card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 8px 20px rgba(0, 172, 193, 0.3);
+		border-color: #00acc1;
+	}
+
+	.certificate-icon {
+		font-size: 3em;
+		color: #00acc1;
+		margin-bottom: 1em;
+	}
+
+	.certificate-title {
+		font-size: 1.2em;
+		font-weight: bold;
+		margin-bottom: 0.5em;
+	}
+
+	.certificate-org {
+		font-size: 0.9em;
+		opacity: 0.8;
+		margin-bottom: 0.5em;
+	}
+
+	.certificate-date {
+		font-size: 0.85em;
+		color: #00acc1;
+	}
+
+/* Map Container */
+
+	.map-container {
+		width: 100%;
+		height: 400px;
+		border-radius: 12px;
+		overflow: hidden;
+		margin: 2em 0;
+		border: 2px solid rgba(0, 172, 193, 0.3);
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+	}
+
+	.map-container iframe {
+		width: 100%;
+		height: 100%;
+		border: none;
+	}
+
+/* Particles Background */
+
+	.particles-container {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		z-index: 0;
+	}
+
+	.particle {
+		position: absolute;
+		background: rgba(0, 172, 193, 0.6);
+		border-radius: 50%;
+		animation: float 15s infinite;
+	}
+
+	@keyframes float {
+		0%, 100% {
+			transform: translateY(0) translateX(0);
+			opacity: 0;
+		}
+		10% {
+			opacity: 1;
+		}
+		90% {
+			opacity: 1;
+		}
+		100% {
+			transform: translateY(-100vh) translateX(100px);
+			opacity: 0;
+		}
+	}
+
 	@keyframes spiderMove {
 		0% { transform: translate(0, 0) rotate(0deg); }
 		10% { transform: translate(100px, 50px) rotate(45deg); }
